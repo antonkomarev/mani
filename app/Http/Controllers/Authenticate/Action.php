@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Authenticator;
 use Denpa\Bitcoin\Exceptions\ConnectionException;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class Action extends Controller
 {
@@ -26,6 +27,10 @@ class Action extends Controller
                 'password' => ['Invalid password or password'],
             ]);
             throw $error;
+        } catch (Throwable $exception) {
+            session()->flash('status', $exception->getMessage());
+
+            return redirect()->back()->withInput();
         }
 
         session()->put('authenticated', true);
