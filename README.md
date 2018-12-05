@@ -1,2 +1,3 @@
-# mani
-Bitcoind wallet primitive implementation
+# Mani
+
+Bitcoind web-wallet primitive implementation. 
