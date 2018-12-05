@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entities\Transaction;
 use Denpa\Bitcoin\Client;
 
 class BitcoinClient
@@ -37,8 +38,15 @@ class BitcoinClient
         return $this->client->request('ListReceivedByAddress', $confirmationsCountRequired, $isEmptyAddressVisible)->get();
     }
 
-    public function listTransactions()
+    public function listTransactions(): array
     {
-        return $this->client->request('ListTransactions')->get();
+        $response = $this->client->request('ListTransactions')->get();
+
+        $transactions = [];
+        foreach($response as $transaction) {
+            $transactions[] = Transaction::fromArray($transaction);
+        }
+
+        return $transactions;
     }
 }

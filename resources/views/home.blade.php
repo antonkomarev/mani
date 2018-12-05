@@ -42,7 +42,12 @@
                             <ul class="list-group">
                                 @foreach($transactions as $transaction)
                                     <li class="list-group-item">
-                                        {{ json_encode($transaction) }}
+                                        <div>Category: {{ $transaction->getCategory() }}</div>
+                                        <div>Txid: {{ $transaction->getTxid() }}</div>
+                                        <div>Address: {{ $transaction->getAddress() }}</div>
+                                        <div>Amount: {{ $transaction->getAmount() }}</div>
+                                        <div>Time received: {{ $transaction->getTimeReceived()->toDateTimeString() }}</div>
+                                        <div>Confirmations: {{ $transaction->getConfirmations() }}</div>
                                     </li>
                                 @endforeach
                             </ul>
