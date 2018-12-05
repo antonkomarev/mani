@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Entities\Address;
 use App\Entities\Transaction;
 use Denpa\Bitcoin\Client;
 
@@ -35,7 +36,18 @@ class BitcoinClient
         $confirmationsCountRequired = 1;
         $isEmptyAddressVisible = true;
 
-        return $this->client->request('ListReceivedByAddress', $confirmationsCountRequired, $isEmptyAddressVisible)->get();
+        $response = $this->client->request(
+            'ListReceivedByAddress',
+            $confirmationsCountRequired,
+            $isEmptyAddressVisible
+        )->get();
+
+        $addresses = [];
+        foreach ($response as $address) {
+            $addresses[] = Address::fromArray($address);
+        }
+
+        return $addresses;
     }
 
     public function listTransactions(): array

@@ -24,13 +24,16 @@
                             <ul class="list-group">
                                 @foreach($addresses as $address)
                                     <li class="list-group-item">
-                                        <h5>{{ $address['address'] }}</h5>
+                                        <h5>{{ $address->getAddress() }}</h5>
                                         <div>
                                             <span class="badge badge-info">
-                                                Amount: {{ $address['amount'] }}
+                                                Amount: {{ $address->getAmount() }}
                                             </span>
                                             <span class="badge badge-success">
-                                                Confirmations: {{ $address['confirmations'] }}
+                                                Confirmations: {{ $address->getConfirmations() }}
+                                            </span>
+                                            <span class="badge badge-secondary">
+                                                Transactions: {{ count($address->getTxids()) }}
                                             </span>
                                         </div>
                                     </li>
